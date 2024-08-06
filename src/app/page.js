@@ -21,11 +21,11 @@ async function Home() {
                 <span className="flex space-x-2">
                   <span className="block w-14 mb-2 dark:border-white border-b-2 border-gray-700"></span>
                   <span className="font-medium dark:text-white text-gray-600">
-                    One Stop Solution to Find Jobs
+                  Empowering Fair and Secure Hiring
                   </span>
                 </span>
                 <h1 className="text-3xl dark:text-white mt-5 lg:text-7xl text-black font-extrabold">
-                  Build your best job community starting from here.
+                Begin Your Journey in a Safe and Fair Job Market
                 </h1>
                 <div className="w-full mt-6 flex items-center text-white justify-start gap-2">
                   <HomepageButtonControls
