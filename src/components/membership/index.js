@@ -4,47 +4,33 @@ import { membershipPlans } from "@/utils";
 import CommonCard from "../common-card";
 import JobIcon from "../job-icon";
 import { Button } from "../ui/button";
-import {
-  createPriceIdAction,
-  createStripePaymentAction,
-  updateProfileAction,
-} from "@/actions";
-import { loadStripe } from "@stripe/stripe-js";
+import { updateProfileAction } from "@/actions";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-
-const stripePromise = loadStripe(
-  "pk_test_51NMv6ZSC6E6fnyMeRIEb9oEXdGRCC9yrBTT4xWHgcjWOuFcqFiAHErvaS50K1hl5t5WJXVGfLLWxvb705IWJhA3300yCcrMnlM"
-);
+import { useEffect, useState } from "react";
+import { web3, initWeb3 } from "@/web3";
 
 function Membership({ profileInfo }) {
   const pathName = useSearchParams();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    initWeb3();
+  }, []);
 
   async function handlePayment(getCurrentPlan) {
-    const stripe = await stripePromise;
-    const extractPriceId = await createPriceIdAction({
-      amount: Number(getCurrentPlan?.price),
-    });
-
-    if (extractPriceId) {
-      sessionStorage.setItem("currentPlan", JSON.stringify(getCurrentPlan));
-      const result = await createStripePaymentAction({
-        lineItems: [
-          {
-            price: extractPriceId?.id,
-            quantity: 1,
-          },
-        ],
-      });
-
-      console.log(result);
-
-      await stripe.redirectToCheckout({
-        sessionId: result?.id,
-      });
+    setLoading(true);
+    try {
+      const accounts = await web3.eth.getAccounts();
+      if (accounts.length > 0) {
+        sessionStorage.setItem("currentPlan", JSON.stringify(getCurrentPlan));
+        await updateProfile();
+      } else {
+        console.error("MetaMask wallet connection failed");
+      }
+    } catch (error) {
+      console.error("Wallet connection failed", error);
     }
-
-    console.log(extractPriceId);
+    setLoading(false);
   }
 
   async function updateProfile() {
@@ -60,14 +46,13 @@ function Membership({ profileInfo }) {
         memberShipStartDate: new Date().toString(),
         memberShipEndDate: new Date(
           new Date().getFullYear() +
-            fetchCurrentPlanFromSessionStroage?.type ===
-          "basic"
-            ? 1
-            : fetchCurrentPlanFromSessionStroage?.plan === "teams"
-            ? 2
-            : 5,
+            (fetchCurrentPlanFromSessionStroage?.type === "basic"
+              ? 1
+              : fetchCurrentPlanFromSessionStroage?.plan === "teams"
+              ? 2
+              : 5),
           new Date().getMonth(),
-          new Date().getDay()
+          new Date().getDate()
         ),
       },
       "/membership"
@@ -105,6 +90,7 @@ function Membership({ profileInfo }) {
           <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
             {membershipPlans.map((plan, index) => (
               <CommonCard
+                key={index}
                 icon={
                   <div className="flex justify-between">
                     <div>
@@ -119,13 +105,13 @@ function Membership({ profileInfo }) {
                   profileInfo?.memberShipType === "enterprise" ||
                   (profileInfo?.memberShipType === "basic" && index === 0) ||
                   (profileInfo?.memberShipType === "teams" &&
-                  index >= 0 &&
-                  index < 2 ? null : (
+                    index >= 0 &&
+                    index < 2 ? null : (
                     <Button
                       onClick={() => handlePayment(plan)}
                       className="disabled:opacity-65 dark:bg-[#fffa27] flex h-11 items-center justify-center px-5"
                     >
-                      {profileInfo?.memberShipType === "basic" ||
+                      {loading ? "Processing..." : profileInfo?.memberShipType === "basic" ||
                       profileInfo?.memberShipType === "teams"
                         ? "Update Plan"
                         : "Get Premium"}
