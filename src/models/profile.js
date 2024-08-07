@@ -16,15 +16,15 @@ const ProfileSchema = new mongoose.Schema({
   candidateInfo: {
     name: String,
     currentJobLocation: String,
-   
+    preferedJobLocation: String,
     currentSalary: String,
     noticePeriod: String,
     skills: String,
     currentCompany: String,
-    
+    previousCompanies: String,
     totalExperience: String,
     college: String,
-    
+    collegeLocation: String,
     graduatedYear: String,
     linkedinProfile: String,
     githubProfile: String,
