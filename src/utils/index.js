@@ -46,18 +46,6 @@ export const candidateOnboardFormControls = [
     componentType: "input",
   },
   {
-    label: "Current Job Location",
-    name: "currentJobLocation",
-    placeholder: "Enter your current job location",
-    componentType: "input",
-  },
-  {
-    label: "Prefered Job Location",
-    name: "preferedJobLocation",
-    placeholder: "Enter your prefered job location",
-    componentType: "input",
-  },
-  {
     label: "Current Salary",
     name: "currentSalary",
     placeholder: "Enter your current salary",
@@ -76,12 +64,6 @@ export const candidateOnboardFormControls = [
     componentType: "input",
   },
   {
-    label: "Previous Companies",
-    name: "previousCompanies",
-    placeholder: "Enter your previous companies",
-    componentType: "input",
-  },
-  {
     label: "Total Experience",
     name: "totalExperience",
     placeholder: "Enter your total experience",
@@ -91,12 +73,6 @@ export const candidateOnboardFormControls = [
     label: "College",
     name: "college",
     placeholder: "Enter your college",
-    componentType: "input",
-  },
-  {
-    label: "College Location",
-    name: "collegeLocation",
-    placeholder: "Enter your college location",
     componentType: "input",
   },
   {
@@ -123,15 +99,15 @@ export const initialCandidateFormData = {
   resume: "",
   name: "",
   currentJobLocation: "",
-  preferedJobLocation: "",
+ 
   currentSalary: "",
   noticePeriod: "",
   skills: "",
   currentCompany: "",
-  previousCompanies: "",
+  
   totalExperience: "",
   college: "",
-  collegeLocation: "",
+ 
   graduatedYear: "",
   linkedinProfile: "",
   githubProfile: "",
@@ -140,15 +116,12 @@ export const initialCandidateFormData = {
 export const initialCandidateAccountFormData = {
   name: "",
   currentJobLocation: "",
-  preferedJobLocation: "",
   currentSalary: "",
   noticePeriod: "",
   skills: "",
   currentCompany: "",
-  previousCompanies: "",
   totalExperience: "",
   college: "",
-  collegeLocation: "",
   graduatedYear: "",
   linkedinProfile: "",
   githubProfile: "",
