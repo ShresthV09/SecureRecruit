@@ -255,15 +255,45 @@ export const membershipPlans = [
     heading: "Tier 1",
     price: 100,
     type: "basic",
+    perks: [
+      "Access to Basic Job Listings",
+      "Profile Visibility",
+      "Job Alerts",
+      "Resume Builder",
+      "Career Resources",
+      "Customer Support"
+    ]
   },
   {
     heading: "Tier 2",
     price: 1000,
     type: "teams",
+    perks: [
+      "Everything in Basic",
+      "Team Collaboration Tools",
+      "Advanced Job Listings",
+      "Enhanced Profile Visibility",
+      "Priority Job Alerts",
+      "Advanced Resume Builder",
+      "Interview Preparation",
+      "Priority Customer Support"
+    ]
   },
   {
     heading: "Tier 3",
     price: 5000,
     type: "enterprise",
-  },
+    perks: [
+      "Everything in Teams",
+      "Unlimited Job Listings",
+      "Premium Profile Visibility",
+      "Executive Job Alerts",
+      "Dedicated Career Coach",
+      "Executive Resume Builder",
+      "Exclusive Networking Events",
+      "Advanced Interview Preparation",
+      "24/7 Premium Customer Support"
+    ]
+  }
 ];
+

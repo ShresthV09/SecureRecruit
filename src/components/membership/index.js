@@ -12,9 +12,11 @@ import { web3, initWeb3 } from "@/web3";
 function Membership({ profileInfo }) {
   const pathName = useSearchParams();
   const [loading, setLoading] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     initWeb3();
+    setHydrated(true); // Mark as hydrated after initial render
   }, []);
 
   async function handlePayment(getCurrentPlan) {
@@ -48,7 +50,7 @@ function Membership({ profileInfo }) {
           new Date().getFullYear() +
             (fetchCurrentPlanFromSessionStroage?.type === "basic"
               ? 1
-              : fetchCurrentPlanFromSessionStroage?.plan === "teams"
+              : fetchCurrentPlanFromSessionStroage?.type === "teams"
               ? 2
               : 5),
           new Date().getMonth(),
@@ -88,38 +90,47 @@ function Membership({ profileInfo }) {
       <div className="py-20 pb-24 pt-6">
         <div className="container mx-auto p-0 space-y-8">
           <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
-            {membershipPlans.map((plan, index) => (
-              <CommonCard
-                key={index}
-                icon={
-                  <div className="flex justify-between">
-                    <div>
-                      <JobIcon />
+            {hydrated &&
+              membershipPlans.map((plan, index) => (
+                <CommonCard
+                  key={index}
+                  icon={
+                    <div className="flex justify-between">
+                      <div>
+                        <JobIcon />
+                      </div>
+                      <h1 className="font-bold text-2xl text-gray-950">{plan.heading}</h1>
                     </div>
-                    <h1 className="font-bold text-2xl">{plan.heading}</h1>
-                  </div>
-                }
-                title={`$ ${plan.price} /yr`}
-                description={plan.type}
-                footerContent={
-                  profileInfo?.memberShipType === "enterprise" ||
-                  (profileInfo?.memberShipType === "basic" && index === 0) ||
-                  (profileInfo?.memberShipType === "teams" &&
-                    index >= 0 &&
-                    index < 2 ? null : (
-                    <Button
-                      onClick={() => handlePayment(plan)}
-                      className="disabled:opacity-65 dark:bg-[#fffa27] flex h-11 items-center justify-center px-5"
-                    >
-                      {loading ? "Processing..." : profileInfo?.memberShipType === "basic" ||
-                      profileInfo?.memberShipType === "teams"
-                        ? "Update Plan"
-                        : "Get Premium"}
-                    </Button>
-                  ))
-                }
-              />
-            ))}
+                  }
+                  title={`$ ${plan.price} /yr`}
+                  description={
+                    <ul className="list-disc pl-5 space-y-2">
+                      {plan.perks.map((perk, perkIndex) => (
+                        <li key={perkIndex} className="text-gray-900 dark:text-black-400">
+                          {perk}
+                        </li>
+                      ))}
+                    </ul>
+                  }
+                  footerContent={
+                    profileInfo?.memberShipType === "enterprise" ||
+                    (profileInfo?.memberShipType === "basic" && index === 0) ||
+                    (profileInfo?.memberShipType === "teams" &&
+                      index >= 0 &&
+                      index < 2 ? null : (
+                      <Button
+                        onClick={() => handlePayment(plan)}
+                        className="disabled:opacity-65 dark:bg-[#fffa27] flex h-11 items-center justify-center px-5"
+                      >
+                        {loading ? "Processing..." : profileInfo?.memberShipType === "basic" ||
+                        profileInfo?.memberShipType === "teams"
+                          ? "Update Plan"
+                          : "Get Premium"}
+                      </Button>
+                    ))
+                  }
+                />
+              ))}
           </div>
         </div>
       </div>
