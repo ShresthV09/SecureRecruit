@@ -22,6 +22,7 @@ import JobIcon from "../job-icon";
 import { Button } from "../ui/button";
 import { createJobApplicationAction } from "@/actions";
 import { useToast } from "../ui/use-toast";
+import { useProver } from "@anon-aadhaar/react";
 
 function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
   const [showJobDetailsDrawer, setShowJobDetailsDrawer] = useState(false);
