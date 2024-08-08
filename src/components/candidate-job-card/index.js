@@ -81,7 +81,9 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
                   {jobItem?.title}
                 </DrawerTitle>
                 <div className="flex gap-3">
-                  <LogInWithAnonAadhaar nullifierSeed={1234} fieldsToReveal={["revealAgeAbove18", "revealGender", "revealState", "revealPinCode"]} />
+                  <LogInWithAnonAadhaar nullifierSeed={1234} fieldsToReveal={["revealAgeAbove18", "revealGender", "revealState", "revealPinCode"]} >
+                    test
+                  </LogInWithAnonAadhaar>
                   <Button
                     onClick={handlejobApply}
                     disabled={
