@@ -27,8 +27,12 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
   const [showJobDetailsDrawer, setShowJobDetailsDrawer] = useState(false);
   console.log(jobApplications, "jobApplications");
   const { toast } = useToast();
-
+  const [anonAadhaar] = useAnonAadhaar();
+  const [, latestProof] = useProver();
   async function handlejobApply() {
+    if (anonAadhaar?.status !== "logged-in") {
+      console.log("First Verify Your aadhar")
+    }
     if (!profileInfo?.isPremiumUser && jobApplications.length >= 2) {
       setShowJobDetailsDrawer(false);
       toast({
@@ -53,6 +57,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
     );
     setShowJobDetailsDrawer(false);
   }
+
 
   return (
     <AnonAadhaarProvider _useTestAadhaar={true}>
@@ -81,9 +86,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
                   {jobItem?.title}
                 </DrawerTitle>
                 <div className="flex gap-3">
-                  <LogInWithAnonAadhaar nullifierSeed={1234} fieldsToReveal={["revealAgeAbove18", "revealGender", "revealState", "revealPinCode"]} >
-                    test
-                  </LogInWithAnonAadhaar>
+                  <LogInWithAnonAadhaar nullifierSeed={1234} fieldsToReveal={["revealAgeAbove18", "revealGender", "revealState", "revealPinCode"]} />
                   <Button
                     onClick={handlejobApply}
                     disabled={
