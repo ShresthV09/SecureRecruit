@@ -30,7 +30,14 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
 
   const handlePlay = () => {
     if (audioRef.current) {
-      audioRef.current.play();
+      if (jobItem.companyName === "Permissionless") {
+        audioRef.current.src = "/Permissionless.webm";
+      } else if (jobItem.companyName === "WazirX") {
+        audioRef.current.src = "/WazirX1.webm";
+      } else {
+        audioRef.current.src = "/1.webm"; // Default audio if no match
+      }
+      audioRef.current.play();  // Play the selected audio
     }
   };
 
@@ -155,7 +162,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
         ? "Applied"
         : "Apply"}
     </Button>
-    <audio ref={audioRef} src="/Microsoft.webm" />
+    <audio ref={audioRef}  />
     <Button
       className="flex h-11 items-center justify-center px-5"
       onClick={() => setShowJobDetailsDrawer(false)}
