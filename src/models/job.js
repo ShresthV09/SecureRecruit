@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 
+// Delete the previous model if it exists
+if (mongoose.models.Job) {
+  mongoose.deleteModel("Job");
+}
+
 const JobSchema = new mongoose.Schema({
   companyName: String,
   title: String,
@@ -9,6 +14,7 @@ const JobSchema = new mongoose.Schema({
   description: String,
   skills: String,
   recruiterId: String,
+  age: String,
   applicants: [
     {
       name: String,
@@ -19,5 +25,6 @@ const JobSchema = new mongoose.Schema({
   ],
 });
 
-const Job = mongoose.models.Job || mongoose.model("Job", JobSchema);
+const Job = mongoose.model("Job", JobSchema);
+
 export default Job;
