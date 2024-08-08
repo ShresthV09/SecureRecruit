@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@anon-aadhaar/react": "^2.4.0",
     "@clerk/nextjs": "^4.29.12",
     "@metamask/detect-provider": "^2.0.0",
     "@radix-ui/react-dialog": "^1.0.5",
