@@ -111,6 +111,10 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
     </h2>
   </div>
   <h3 className="text-2xl font-medium text-black mb-6 text-center">
+    Minimum Age Required:{" "}
+    <span className="font-bold text-black-600">{jobItem?.age} years</span>
+  </h3>
+  <h3 className="text-2xl font-medium text-black mb-6 text-center">
     Experience: {jobItem?.experience} year
   </h3>
   <div className="flex flex-wrap gap-4 mb-8 justify-center">
