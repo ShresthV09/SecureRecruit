@@ -198,6 +198,12 @@ export const postNewJobFormControls = [
     placeholder: "Skills",
     componentType: "input",
   },
+  {
+    label: "Age",
+    name: "age",
+    placeholder: "Age",
+    componentType: "input",
+  },
 ];
 
 export const initialPostNewJobFormData = {
@@ -208,6 +214,7 @@ export const initialPostNewJobFormData = {
   experience: "",
   description: "",
   skills: "",
+  age: "",
 };
 
 export const filterMenuDataArray = [
@@ -261,8 +268,8 @@ export const membershipPlans = [
       "Job Alerts",
       "Resume Builder",
       "Career Resources",
-      "Customer Support"
-    ]
+      "Customer Support",
+    ],
   },
   {
     heading: "Tier 2",
@@ -276,8 +283,8 @@ export const membershipPlans = [
       "Priority Job Alerts",
       "Advanced Resume Builder",
       "Interview Preparation",
-      "Priority Customer Support"
-    ]
+      "Priority Customer Support",
+    ],
   },
   {
     heading: "Tier 3",
@@ -292,8 +299,7 @@ export const membershipPlans = [
       "Executive Resume Builder",
       "Exclusive Networking Events",
       "Advanced Interview Preparation",
-      "24/7 Premium Customer Support"
-    ]
-  }
+      "24/7 Premium Customer Support",
+    ],
+  },
 ];
-
