@@ -32,7 +32,11 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
   const [, latestProof] = useProver();
   async function handlejobApply() {
     if (anonAadhaar?.status !== "logged-in") {
-      console.log("First Verify Your aadhar")
+      toast({
+        variant: "destructive",
+        title: "Please login with Aadhaar",
+      });
+      return
     }
     if (!profileInfo?.isPremiumUser && jobApplications.length >= 2) {
       setShowJobDetailsDrawer(false);
