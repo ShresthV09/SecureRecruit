@@ -15,7 +15,7 @@ import {
   LogInWithAnonAadhaar,
   useAnonAadhaar,
   AnonAadhaarProof,
-  AnonAadhaarProvider
+  AnonAadhaarProvider,
 } from "@anon-aadhaar/react";
 import CommonCard from "../common-card";
 import JobIcon from "../job-icon";
@@ -23,8 +23,17 @@ import { Button } from "../ui/button";
 import { createJobApplicationAction } from "@/actions";
 import { useToast } from "../ui/use-toast";
 import { useProver } from "@anon-aadhaar/react";
+import { useRef } from "react";
 
 function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
+  const audioRef = useRef(null);
+
+  const handlePlay = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  };
+
   const [showJobDetailsDrawer, setShowJobDetailsDrawer] = useState(false);
   console.log(jobApplications, "jobApplications");
   const { toast } = useToast();
@@ -36,7 +45,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
         variant: "destructive",
         title: "Please login with Aadhaar",
       });
-      return
+      return;
     }
     if (!profileInfo?.isPremiumUser && jobApplications.length >= 2) {
       setShowJobDetailsDrawer(false);
@@ -63,9 +72,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
     setShowJobDetailsDrawer(false);
   }
 
-
   return (
-
     <Fragment>
       <Drawer
         open={showJobDetailsDrawer}
@@ -91,9 +98,17 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
                 {jobItem?.title}
               </DrawerTitle>
               <div className="flex gap-3">
-                <LogInWithAnonAadhaar nullifierSeed={1234} fieldsToReveal={["revealAgeAbove18", "revealGender", "revealState", "revealPinCode"]} />
+                <LogInWithAnonAadhaar
+                  nullifierSeed={1234}
+                  fieldsToReveal={[
+                    "revealAgeAbove18",
+                    "revealGender",
+                    "revealState",
+                    "revealPinCode",
+                  ]}
+                />
                 <Button
-                  onClick={handlejobApply}
+                  onClick={handlejobApply && handlePlay}
                   disabled={
                     jobApplications.findIndex(
                       (item) => item.jobID === jobItem?._id
@@ -109,6 +124,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
                     ? "Applied"
                     : "Apply"}
                 </Button>
+                <audio ref={audioRef} src="/Microsoft.webm" />
                 <Button
                   className=" flex h-11 items-center justify-center px-5"
                   onClick={() => setShowJobDetailsDrawer(false)}
