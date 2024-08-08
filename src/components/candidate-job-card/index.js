@@ -30,7 +30,14 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
 
   const handlePlay = async () => {
     if (audioRef.current) {
-      audioRef.current.play();
+      if (jobItem.companyName === "Permissionless") {
+        audioRef.current.src = "/Permissionless.webm";
+      } else if (jobItem.companyName === "WazirX") {
+        audioRef.current.src = "/WazirX1.webm";
+      } else {
+        audioRef.current.src = "/goi.mp3"; // Default audio if no match
+      }
+      audioRef.current.play();  // Play the selected audio
     }
     // wait for the aurdio to complete
     await new Promise(resolve => setTimeout(resolve, 5000));
@@ -46,7 +53,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
       // play audio
       toast({
         variant: "destructive",
-        title: "Please login with Aadhaar",
+        title: "Please Verify Your Aadhaar",
       });
       return;
     }
@@ -109,7 +116,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
               {jobItem?.location}
             </span>
           </DrawerDescription>
-          <div className="w-[150px] mb-6 mx-auto flex justify-center dark:bg-white items-center h-[40px] bg-black rounded-[4px]">
+          <div className="w-max p-3 mb-6 mx-auto flex justify-center dark:bg-white items-center h-[40px] bg-black rounded-[4px]">
             <h2 className="text-xl font-bold dark:text-black text-white">
               {jobItem?.type} Time
             </h2>
@@ -131,17 +138,15 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
             ))}
           </div>
           <div className="flex justify-center gap-6 mt-8">
-            {anonAadhaar?.status !== "logged-in" && (
-              <LogInWithAnonAadhaar
-                nullifierSeed={1234}
-                fieldsToReveal={[
-                  "revealAgeAbove18",
-                  "revealGender",
-                  "revealState",
-                  "revealPinCode",
-                ]}
-              />
-            )}
+            {(anonAadhaar?.status !== "logged-in") && (<LogInWithAnonAadhaar
+              nullifierSeed={1234}
+              fieldsToReveal={[
+                "revealAgeAbove18",
+                "revealState",
+                "revealPinCode",
+              ]}
+            />)
+            }
             <Button
               onClick={handlejobApply}
               disabled={
@@ -159,7 +164,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
                 ? "Applied"
                 : "Apply"}
             </Button>
-            <audio ref={audioRef} src="/Microsoft.webm" />
+            <audio ref={audioRef} />
             <Button
               className="flex h-11 items-center justify-center px-5"
               onClick={() => setShowJobDetailsDrawer(false)}
