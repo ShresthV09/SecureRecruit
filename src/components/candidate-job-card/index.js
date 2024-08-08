@@ -41,6 +41,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
   const [, latestProof] = useProver();
   async function handlejobApply() {
     if (anonAadhaar?.status !== "logged-in") {
+      // play audio
       toast({
         variant: "destructive",
         title: "Please login with Aadhaar",
@@ -69,6 +70,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
       },
       "/jobs"
     );
+    handlePlay();
     setShowJobDetailsDrawer(false);
   }
 
