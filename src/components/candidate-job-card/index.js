@@ -84,7 +84,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
             </Button>
           }
         />
-        <DrawerContent className="p-6">
+        <DrawerContent className="flex flex-col rounded-t-[10px] h-full w-full">
           <DrawerHeader className="px-0">
             <div className="flex justify-between">
               <DrawerTitle className="text-4xl dark:text-white font-extrabold text-gray-800">
