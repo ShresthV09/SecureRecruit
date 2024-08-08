@@ -41,6 +41,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
   const [, latestProof] = useProver();
   async function handlejobApply() {
     if (anonAadhaar?.status !== "logged-in") {
+      // play audio
       toast({
         variant: "destructive",
         title: "Please login with Aadhaar",
@@ -69,6 +70,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
       },
       "/jobs"
     );
+    handlePlay();
     setShowJobDetailsDrawer(false);
   }
 
@@ -98,17 +100,19 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
                 {jobItem?.title}
               </DrawerTitle>
               <div className="flex gap-3">
-                <LogInWithAnonAadhaar
-                  nullifierSeed={1234}
-                  fieldsToReveal={[
-                    "revealAgeAbove18",
-                    "revealGender",
-                    "revealState",
-                    "revealPinCode",
-                  ]}
-                />
+                {anonAadhaar?.status !== "logged-in" && (
+                  <LogInWithAnonAadhaar
+                    nullifierSeed={1234}
+                    fieldsToReveal={[
+                      "revealAgeAbove18",
+                      "revealGender",
+                      "revealState",
+                      "revealPinCode",
+                    ]}
+                  />
+                )}
                 <Button
-                  onClick={handlejobApply && handlePlay}
+                  onClick={handlejobApply}
                   disabled={
                     jobApplications.findIndex(
                       (item) => item.jobID === jobItem?._id

@@ -60,6 +60,7 @@ export async function fetchJobsForCandidateAction(filterParams = {}) {
 
 export async function createJobApplicationAction(data, pathToRevalidate) {
   await connectToDB();
+  console.log(data)
   await Application.create(data);
   revalidatePath(pathToRevalidate);
 }
